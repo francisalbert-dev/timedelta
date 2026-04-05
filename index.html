@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Good / Bad Activity Timer</title>
-  <meta name="theme-color" content="#2f2418">
+  <meta name="theme-color" content="#0d1117">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Delta Timer">
@@ -39,6 +39,42 @@
       </article>
     </section>
 
+    <section class="top-tools-grid">
+      <section class="panel active-panel">
+        <div>
+          <p class="section-kicker">Live Timer</p>
+          <h2 id="active-title">No timer running</h2>
+          <p id="active-meta">Start a timer from one of your activities below.</p>
+        </div>
+        <div class="active-clock" id="active-clock">00:00:00</div>
+      </section>
+
+      <section class="panel manual-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="section-kicker">Manual Log</p>
+            <h2>Add time you forgot to track</h2>
+          </div>
+        </div>
+
+        <form id="manual-log-form" class="manual-form">
+          <label>
+            Activity
+            <select id="manual-activity" name="activityId" required></select>
+          </label>
+          <label>
+            When
+            <input id="manual-start" name="start" type="datetime-local" required>
+          </label>
+          <label>
+            Duration (minutes)
+            <input id="manual-duration" name="duration" type="number" min="1" step="1" value="30" required>
+          </label>
+          <button type="submit">Add log</button>
+        </form>
+      </section>
+    </section>
+
     <section class="panel dashboard-panel">
       <div class="panel-heading">
         <div>
@@ -69,15 +105,6 @@
         </div>
         <div id="trend-grid" class="trend-grid"></div>
       </section>
-    </section>
-
-    <section class="panel active-panel">
-      <div>
-        <p class="section-kicker">Live Timer</p>
-        <h2 id="active-title">No timer running</h2>
-        <p id="active-meta">Start a timer from one of your activities below.</p>
-      </div>
-      <div class="active-clock" id="active-clock">00:00:00</div>
     </section>
 
     <section class="panel install-panel">
@@ -140,30 +167,14 @@
       <section class="panel">
         <div class="panel-heading">
           <div>
-            <p class="section-kicker">Manual Log</p>
-            <h2>Add time you forgot to track</h2>
+            <p class="section-kicker">Recent Logs</p>
+            <h2>Your latest sessions</h2>
           </div>
         </div>
 
-        <form id="manual-log-form" class="manual-form">
-          <label>
-            Activity
-            <select id="manual-activity" name="activityId" required></select>
-          </label>
-          <label>
-            When
-            <input id="manual-start" name="start" type="datetime-local" required>
-          </label>
-          <label>
-            Duration (minutes)
-            <input id="manual-duration" name="duration" type="number" min="1" step="1" value="30" required>
-          </label>
-          <button type="submit">Add log</button>
-        </form>
-
         <div class="log-list-wrap">
           <div class="section-row">
-            <p class="section-kicker">Recent Logs</p>
+            <p class="section-kicker">Saved Entries</p>
             <button id="clear-logs" class="ghost-button" type="button">Clear all logs</button>
           </div>
           <div id="log-list" class="log-list"></div>

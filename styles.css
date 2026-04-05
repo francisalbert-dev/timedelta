@@ -1,18 +1,18 @@
 :root {
-  --bg: #f6efe4;
-  --panel: rgba(255, 251, 245, 0.88);
-  --panel-strong: #fff8ef;
-  --line: #d4c3a5;
-  --text: #2f2418;
-  --muted: #705f48;
-  --good: #237a57;
-  --good-soft: #dff5ea;
-  --bad: #9f4d33;
-  --bad-soft: #fde4dc;
-  --delta: #264f73;
-  --delta-soft: #ddebf7;
-  --accent: #c47a2c;
-  --shadow: 0 20px 45px rgba(74, 49, 21, 0.12);
+  --bg: #0d1117;
+  --panel: rgba(17, 24, 39, 0.9);
+  --panel-strong: #121a28;
+  --line: rgba(148, 163, 184, 0.2);
+  --text: #e5edf7;
+  --muted: #91a0b8;
+  --good: #22c55e;
+  --good-soft: rgba(34, 197, 94, 0.14);
+  --bad: #ef4444;
+  --bad-soft: rgba(239, 68, 68, 0.14);
+  --delta: #334155;
+  --delta-soft: rgba(71, 85, 105, 0.3);
+  --accent: #91a0b8;
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
 }
 
 * {
@@ -25,9 +25,9 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: var(--text);
   background:
-    radial-gradient(circle at top left, rgba(255, 214, 153, 0.7), transparent 28%),
-    radial-gradient(circle at bottom right, rgba(117, 179, 150, 0.35), transparent 20%),
-    linear-gradient(160deg, #f8f2e9 0%, #f1e7d7 45%, #e7ddce 100%);
+    radial-gradient(circle at top left, rgba(34, 197, 94, 0.1), transparent 25%),
+    radial-gradient(circle at top right, rgba(239, 68, 68, 0.08), transparent 22%),
+    linear-gradient(180deg, #05070b 0%, #0b1020 55%, #111827 100%);
 }
 
 button,
@@ -76,6 +76,7 @@ select {
 }
 
 .summary-grid,
+.top-tools-grid,
 .layout-grid,
 .dashboard-grid,
 .analytics-grid,
@@ -90,9 +91,14 @@ select {
   margin-bottom: 18px;
 }
 
+.top-tools-grid {
+  grid-template-columns: 1.1fr 1fr;
+  margin-bottom: 18px;
+}
+
 .summary-card,
 .panel {
-  border: 1px solid rgba(118, 91, 58, 0.13);
+  border: 1px solid rgba(148, 163, 184, 0.12);
   border-radius: 24px;
   background: var(--panel);
   box-shadow: var(--shadow);
@@ -125,8 +131,8 @@ select {
 .dashboard-card {
   padding: 18px;
   border-radius: 20px;
-  background: rgba(255, 250, 244, 0.92);
-  border: 1px solid rgba(118, 91, 58, 0.14);
+  background: rgba(15, 23, 42, 0.96);
+  border: 1px solid rgba(148, 163, 184, 0.12);
 }
 
 .dashboard-header,
@@ -164,7 +170,7 @@ select {
   padding: 14px 16px;
   margin-bottom: 18px;
   border-radius: 18px;
-  background: linear-gradient(180deg, rgba(246, 239, 228, 0.9), rgba(255, 248, 239, 0.96));
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.98), rgba(19, 31, 52, 0.98));
 }
 
 .mini-label {
@@ -185,7 +191,7 @@ select {
 .breakdown-row {
   padding: 10px 12px;
   border-radius: 16px;
-  background: rgba(246, 239, 228, 0.7);
+  background: rgba(15, 23, 42, 0.85);
 }
 
 .breakdown-name {
@@ -202,8 +208,8 @@ select {
 .trend-card {
   padding: 16px;
   border-radius: 18px;
-  background: rgba(255, 250, 244, 0.9);
-  border: 1px solid rgba(118, 91, 58, 0.14);
+  background: rgba(15, 23, 42, 0.96);
+  border: 1px solid rgba(148, 163, 184, 0.12);
 }
 
 .history-stats {
@@ -219,7 +225,7 @@ select {
   margin: 0;
   padding: 10px 12px;
   border-radius: 14px;
-  background: rgba(246, 239, 228, 0.7);
+  background: rgba(15, 23, 42, 0.82);
 }
 
 .history-line span {
@@ -260,7 +266,7 @@ select {
   overflow: hidden;
   height: 14px;
   border-radius: 999px;
-  background: rgba(118, 91, 58, 0.12);
+  background: rgba(148, 163, 184, 0.14);
 }
 
 .trend-bar-fill {
@@ -269,15 +275,15 @@ select {
 }
 
 .summary-card.good {
-  background: linear-gradient(180deg, rgba(223, 245, 234, 0.95), rgba(255, 248, 239, 0.95));
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.2), rgba(15, 23, 42, 0.96));
 }
 
 .summary-card.bad {
-  background: linear-gradient(180deg, rgba(253, 228, 220, 0.96), rgba(255, 248, 239, 0.95));
+  background: linear-gradient(180deg, rgba(239, 68, 68, 0.18), rgba(15, 23, 42, 0.96));
 }
 
 .summary-card.delta {
-  background: linear-gradient(180deg, rgba(221, 235, 247, 0.96), rgba(255, 248, 239, 0.95));
+  background: linear-gradient(180deg, rgba(71, 85, 105, 0.32), rgba(15, 23, 42, 0.96));
 }
 
 .label,
@@ -298,18 +304,18 @@ select {
   justify-content: space-between;
   gap: 20px;
   padding: 22px 24px;
-  margin-bottom: 18px;
 }
 
 .active-clock {
   min-width: 190px;
   padding: 18px 24px;
   border-radius: 20px;
-  background: #2f2418;
-  color: #fff8ef;
+  background: #020617;
+  color: #f8fafc;
   text-align: center;
   font-size: clamp(1.6rem, 3vw, 2.5rem);
   font-weight: 700;
+  border: 1px solid rgba(148, 163, 184, 0.14);
 }
 
 .install-panel {
@@ -363,7 +369,7 @@ select {
 }
 
 .manual-form {
-  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: 18px;
 }
 
@@ -382,6 +388,7 @@ button {
   padding: 12px 14px;
   background: var(--panel-strong);
   color: var(--text);
+  min-width: 0;
 }
 
 button {
@@ -413,14 +420,14 @@ button:disabled {
 }
 
 .ghost-button {
-  background: transparent;
+  background: rgba(15, 23, 42, 0.45);
 }
 
 #install-button {
   min-width: 150px;
-  background: var(--delta);
-  border-color: var(--delta);
-  color: white;
+  background: rgba(15, 23, 42, 0.95);
+  border-color: var(--line);
+  color: var(--text);
 }
 
 .transfer-actions {
@@ -460,9 +467,9 @@ button:disabled {
 .activity-card,
 .log-item {
   padding: 14px;
-  border: 1px solid rgba(118, 91, 58, 0.14);
+  border: 1px solid rgba(148, 163, 184, 0.12);
   border-radius: 18px;
-  background: rgba(255, 250, 244, 0.9);
+  background: rgba(15, 23, 42, 0.88);
 }
 
 .activity-card {
@@ -520,11 +527,12 @@ button:disabled {
   border-radius: 16px;
   border: 1px dashed var(--line);
   color: var(--muted);
-  background: rgba(255, 248, 239, 0.72);
+  background: rgba(15, 23, 42, 0.72);
 }
 
 @media (max-width: 960px) {
   .summary-grid,
+  .top-tools-grid,
   .layout-grid,
   .activity-columns,
   .manual-form,
