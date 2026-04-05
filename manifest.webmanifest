@@ -1,0 +1,18 @@
+{
+  "name": "Delta Activity Timer",
+  "short_name": "Delta Timer",
+  "description": "Track good and bad activities with timers, manual logs, and a running delta.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6efe4",
+  "theme_color": "#2f2418",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
