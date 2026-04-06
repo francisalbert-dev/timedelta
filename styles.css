@@ -75,13 +75,103 @@ select {
   color: var(--muted);
 }
 
+.tab-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.tab-button {
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.92);
+  color: var(--muted);
+}
+
+.tab-button.active {
+  color: var(--text);
+  border-color: rgba(148, 163, 184, 0.35);
+  background: rgba(30, 41, 59, 0.95);
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+.delta-hero {
+  display: grid;
+  gap: 12px;
+  padding: 28px;
+  margin-bottom: 18px;
+}
+
+.delta-hero-title {
+  margin: 0;
+  font-size: clamp(3rem, 9vw, 5.6rem);
+  line-height: 0.95;
+}
+
+.delta-hero-meta,
+.delta-hero-subtle {
+  margin: 0;
+}
+
+.delta-hero-meta {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.delta-hero-subtle {
+  color: var(--muted);
+}
+
+.main-timer-sections {
+  grid-template-columns: 1fr 1fr;
+}
+
+.main-timer-grid {
+  margin-top: 18px;
+}
+
+.timer-tile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  background: rgba(15, 23, 42, 0.88);
+}
+
+.timer-type,
+.timer-name {
+  margin: 0;
+}
+
+.timer-type {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+}
+
+.timer-name {
+  margin-top: 6px;
+}
+
 .summary-grid,
 .top-tools-grid,
 .layout-grid,
 .dashboard-grid,
 .analytics-grid,
 .history-grid,
-.trend-grid {
+.trend-grid,
+.main-timer-grid,
+.main-timer-sections {
   display: grid;
   gap: 18px;
 }
@@ -92,8 +182,12 @@ select {
 }
 
 .top-tools-grid {
-  grid-template-columns: 1.1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin-bottom: 18px;
+}
+
+.top-tools-grid > .panel {
+  height: 100%;
 }
 
 .summary-card,
@@ -298,16 +392,9 @@ select {
   font-weight: 800;
 }
 
-.active-panel {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 22px 24px;
-}
-
 .active-clock {
-  min-width: 190px;
+  width: 100%;
+  min-width: 0;
   padding: 18px 24px;
   border-radius: 20px;
   background: #020617;
@@ -369,8 +456,12 @@ select {
 }
 
 .manual-form {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin-top: 18px;
+}
+
+.manual-form button {
+  grid-column: span 2;
 }
 
 .manual-form label {
@@ -407,16 +498,28 @@ button:disabled {
   transform: none;
 }
 
-.start-button {
+.timer-toggle,
+.toggle-button {
+  min-width: 108px;
+}
+
+.timer-toggle.good,
+.toggle-button.good {
   background: var(--good);
   border-color: var(--good);
   color: white;
 }
 
-.stop-button {
+.timer-toggle.bad,
+.toggle-button.bad {
   background: var(--bad);
   border-color: var(--bad);
   color: white;
+}
+
+.timer-toggle.active,
+.toggle-button.active {
+  box-shadow: 0 0 0 3px rgba(248, 250, 252, 0.08);
 }
 
 .ghost-button {
@@ -534,6 +637,7 @@ button:disabled {
   .summary-grid,
   .top-tools-grid,
   .layout-grid,
+  .main-timer-sections,
   .activity-columns,
   .manual-form,
   .dashboard-grid,
@@ -542,7 +646,6 @@ button:disabled {
   }
 
   .panel-heading,
-  .active-panel,
   .install-panel {
     align-items: stretch;
     flex-direction: column;
@@ -554,5 +657,9 @@ button:disabled {
 
   .active-clock {
     width: 100%;
+  }
+
+  .manual-form button {
+    grid-column: span 1;
   }
 }

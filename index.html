@@ -23,165 +23,209 @@
       </p>
     </section>
 
-    <section class="summary-grid" aria-label="Totals">
-      <article class="summary-card good">
-        <p class="label">Good Total</p>
-        <p class="value" id="good-total">0m</p>
-      </article>
-      <article class="summary-card bad">
-        <p class="label">Bad Total</p>
-        <p class="value" id="bad-total">0m</p>
-      </article>
-      <article class="summary-card delta">
-        <p class="label">Delta</p>
-        <p class="value" id="delta-total">0m</p>
-        <p class="delta-hint" id="delta-hint">Good minus bad</p>
-      </article>
-    </section>
+    <nav class="tab-bar" aria-label="Sections">
+      <button class="tab-button active" type="button" data-tab-target="main">Main</button>
+      <button class="tab-button" type="button" data-tab-target="insights">Insights</button>
+      <button class="tab-button" type="button" data-tab-target="manage">Manage</button>
+    </nav>
 
-    <section class="top-tools-grid">
-      <section class="panel active-panel">
-        <div>
-          <p class="section-kicker">Live Timer</p>
-          <h2 id="active-title">No timer running</h2>
-          <p id="active-meta">Start a timer from one of your activities below.</p>
-        </div>
+    <section class="tab-panel active" data-tab-panel="main">
+      <section class="panel delta-hero">
+        <p class="section-kicker">Today</p>
+        <h2 class="delta-hero-title" id="main-delta-total">+0m</h2>
+        <p class="hero-copy" id="main-delta-hint">Good minus bad</p>
         <div class="active-clock" id="active-clock">00:00:00</div>
+        <p id="active-title" class="delta-hero-meta">No timer running</p>
+        <p id="active-meta" class="delta-hero-subtle">Start a timer from one of your activities below.</p>
       </section>
 
-      <section class="panel manual-panel">
-        <div class="panel-heading">
-          <div>
-            <p class="section-kicker">Manual Log</p>
-            <h2>Add time you forgot to track</h2>
+      <section class="main-timer-sections">
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Good Timers</p>
+              <h2>One tap on, one tap off</h2>
+            </div>
           </div>
-        </div>
+          <div id="main-good-timers" class="main-timer-grid"></div>
+        </section>
 
-        <form id="manual-log-form" class="manual-form">
-          <label>
-            Activity
-            <select id="manual-activity" name="activityId" required></select>
-          </label>
-          <label>
-            When
-            <input id="manual-start" name="start" type="datetime-local" required>
-          </label>
-          <label>
-            Duration (minutes)
-            <input id="manual-duration" name="duration" type="number" min="1" step="1" value="30" required>
-          </label>
-          <button type="submit">Add log</button>
-        </form>
-      </section>
-    </section>
-
-    <section class="panel dashboard-panel">
-      <div class="panel-heading">
-        <div>
-          <p class="section-kicker">Balance Dashboard</p>
-          <h2>Week, month, and year at a glance</h2>
-        </div>
-      </div>
-      <div id="dashboard-grid" class="dashboard-grid"></div>
-    </section>
-
-    <section class="analytics-grid">
-      <section class="panel">
-        <div class="panel-heading">
-          <div>
-            <p class="section-kicker">History</p>
-            <h2>Previous periods</h2>
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Bad Timers</p>
+              <h2>Keep the friction low</h2>
+            </div>
           </div>
-        </div>
-        <div id="history-grid" class="history-grid"></div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-heading">
-          <div>
-            <p class="section-kicker">Trends</p>
-            <h2>Balance over time</h2>
-          </div>
-        </div>
-        <div id="trend-grid" class="trend-grid"></div>
+          <div id="main-bad-timers" class="main-timer-grid"></div>
+        </section>
       </section>
     </section>
 
-    <section class="panel install-panel">
-      <div>
-        <p class="section-kicker">Phone Install</p>
-        <h2>Use it like an app on your home screen</h2>
-        <p id="install-message" class="hero-copy install-copy">
-          Open this from a hosted link in your phone browser, then install it for quick access and offline use.
-        </p>
-      </div>
-      <button id="install-button" type="button" hidden>Install app</button>
-    </section>
+    <section class="tab-panel" data-tab-panel="insights">
+      <section class="summary-grid" aria-label="Totals">
+        <article class="summary-card good">
+          <p class="label">Good Total</p>
+          <p class="value" id="good-total">0m</p>
+        </article>
+        <article class="summary-card bad">
+          <p class="label">Bad Total</p>
+          <p class="value" id="bad-total">0m</p>
+        </article>
+        <article class="summary-card delta">
+          <p class="label">Delta</p>
+          <p class="value" id="delta-total">0m</p>
+          <p class="delta-hint" id="delta-hint">Good minus bad</p>
+        </article>
+      </section>
 
-    <section class="panel transfer-panel">
-      <div class="panel-heading">
-        <div>
-          <p class="section-kicker">Transfer</p>
-          <h2>Export or import your data</h2>
-        </div>
-      </div>
-      <p class="hero-copy install-copy" id="transfer-message">
-        Export a backup file to move your activities and logs between desktop and phone.
-      </p>
-      <div class="transfer-actions">
-        <button id="export-button" type="button">Export data</button>
-        <label class="file-label" for="import-file">Import data</label>
-        <input id="import-file" type="file" accept="application/json" hidden>
-      </div>
-    </section>
-
-    <section class="layout-grid">
-      <section class="panel">
+      <section class="panel dashboard-panel">
         <div class="panel-heading">
           <div>
-            <p class="section-kicker">Activities</p>
-            <h2>Your timers</h2>
+            <p class="section-kicker">Balance Dashboard</p>
+            <h2>Week, month, and year at a glance</h2>
           </div>
-          <form id="add-activity-form" class="add-form">
-            <input id="new-activity-name" name="name" type="text" maxlength="40" placeholder="Add activity" required>
-            <select id="new-activity-type" name="type" aria-label="Activity type">
-              <option value="good">Good</option>
-              <option value="bad">Bad</option>
-            </select>
-            <button type="submit">Add</button>
+        </div>
+        <div id="dashboard-grid" class="dashboard-grid"></div>
+      </section>
+
+      <section class="analytics-grid">
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">History</p>
+              <h2>Previous periods</h2>
+            </div>
+          </div>
+          <div id="history-grid" class="history-grid"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Trends</p>
+              <h2>Balance over time</h2>
+            </div>
+          </div>
+          <div id="trend-grid" class="trend-grid"></div>
+        </section>
+      </section>
+    </section>
+
+    <section class="tab-panel" data-tab-panel="manage">
+      <section class="top-tools-grid">
+        <section class="panel manual-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Manual Log</p>
+              <h2>Add time you forgot to track</h2>
+            </div>
+          </div>
+
+          <form id="manual-log-form" class="manual-form">
+            <label>
+              Activity
+              <select id="manual-activity" name="activityId" required></select>
+            </label>
+            <label>
+              When
+              <input id="manual-start" name="start" type="datetime-local" required>
+            </label>
+            <label>
+              Duration (minutes)
+              <input id="manual-duration" name="duration" type="number" min="1" step="1" value="30" required>
+            </label>
+            <button type="submit">Add log</button>
           </form>
-        </div>
+        </section>
 
-        <div class="activity-columns">
+        <section class="panel install-panel">
           <div>
-            <h3>Good</h3>
-            <div id="good-activities" class="activity-list"></div>
+            <p class="section-kicker">Phone Install</p>
+            <h2>Use it like an app on your home screen</h2>
+            <p id="install-message" class="hero-copy install-copy">
+              Open this from a hosted link in your phone browser, then install it for quick access and offline use.
+            </p>
           </div>
+          <button id="install-button" type="button" hidden>Install app</button>
+        </section>
+      </section>
+
+      <section class="panel transfer-panel">
+        <div class="panel-heading">
           <div>
-            <h3>Bad</h3>
-            <div id="bad-activities" class="activity-list"></div>
+            <p class="section-kicker">Transfer</p>
+            <h2>Export or import your data</h2>
           </div>
+        </div>
+        <p class="hero-copy install-copy" id="transfer-message">
+          Export a backup file to move your activities and logs between desktop and phone.
+        </p>
+        <div class="transfer-actions">
+          <button id="export-button" type="button">Export data</button>
+          <label class="file-label" for="import-file">Import data</label>
+          <input id="import-file" type="file" accept="application/json" hidden>
         </div>
       </section>
 
-      <section class="panel">
-        <div class="panel-heading">
-          <div>
-            <p class="section-kicker">Recent Logs</p>
-            <h2>Your latest sessions</h2>
+      <section class="layout-grid">
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Activities</p>
+              <h2>Your timers</h2>
+            </div>
+            <form id="add-activity-form" class="add-form">
+              <input id="new-activity-name" name="name" type="text" maxlength="40" placeholder="Add activity" required>
+              <select id="new-activity-type" name="type" aria-label="Activity type">
+                <option value="good">Good</option>
+                <option value="bad">Bad</option>
+              </select>
+              <button type="submit">Add</button>
+            </form>
           </div>
-        </div>
 
-        <div class="log-list-wrap">
-          <div class="section-row">
-            <p class="section-kicker">Saved Entries</p>
-            <button id="clear-logs" class="ghost-button" type="button">Clear all logs</button>
+          <div class="activity-columns">
+            <div>
+              <h3>Good</h3>
+              <div id="good-activities" class="activity-list"></div>
+            </div>
+            <div>
+              <h3>Bad</h3>
+              <div id="bad-activities" class="activity-list"></div>
+            </div>
           </div>
-          <div id="log-list" class="log-list"></div>
-        </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Recent Logs</p>
+              <h2>Your latest sessions</h2>
+            </div>
+          </div>
+
+          <div class="log-list-wrap">
+            <div class="section-row">
+              <p class="section-kicker">Saved Entries</p>
+              <button id="clear-logs" class="ghost-button" type="button">Clear all logs</button>
+            </div>
+            <div id="log-list" class="log-list"></div>
+          </div>
+        </section>
       </section>
     </section>
   </main>
+
+  <template id="timer-template">
+    <article class="timer-tile">
+      <div>
+        <p class="timer-type"></p>
+        <h3 class="timer-name"></h3>
+      </div>
+      <button class="timer-toggle" type="button">On</button>
+    </article>
+  </template>
 
   <template id="activity-template">
     <article class="activity-card">
@@ -193,8 +237,7 @@
         </select>
       </div>
       <div class="activity-actions">
-        <button class="start-button" type="button">Start</button>
-        <button class="stop-button" type="button">Stop</button>
+        <button class="toggle-button" type="button">On</button>
         <button class="ghost-button delete-button" type="button">Delete</button>
       </div>
     </article>

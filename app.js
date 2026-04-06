@@ -18,7 +18,10 @@ let deferredInstallPrompt = null;
 
 const goodActivitiesEl = document.querySelector("#good-activities");
 const badActivitiesEl = document.querySelector("#bad-activities");
+const mainGoodTimersEl = document.querySelector("#main-good-timers");
+const mainBadTimersEl = document.querySelector("#main-bad-timers");
 const activityTemplate = document.querySelector("#activity-template");
+const timerTemplate = document.querySelector("#timer-template");
 const logTemplate = document.querySelector("#log-template");
 const dashboardTemplate = document.querySelector("#dashboard-template");
 const historyTemplate = document.querySelector("#history-template");
@@ -32,6 +35,8 @@ const goodTotalEl = document.querySelector("#good-total");
 const badTotalEl = document.querySelector("#bad-total");
 const deltaTotalEl = document.querySelector("#delta-total");
 const deltaHintEl = document.querySelector("#delta-hint");
+const mainDeltaTotalEl = document.querySelector("#main-delta-total");
+const mainDeltaHintEl = document.querySelector("#main-delta-hint");
 const activeTitleEl = document.querySelector("#active-title");
 const activeMetaEl = document.querySelector("#active-meta");
 const activeClockEl = document.querySelector("#active-clock");
@@ -45,8 +50,18 @@ const installMessage = document.querySelector("#install-message");
 const exportButton = document.querySelector("#export-button");
 const importFileInput = document.querySelector("#import-file");
 const transferMessage = document.querySelector("#transfer-message");
+const tabButtons = [...document.querySelectorAll(".tab-button")];
+const tabPanels = [...document.querySelectorAll(".tab-panel")];
 
 manualStartInput.value = toDateTimeLocal(new Date());
+
+tabButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const target = button.dataset.tabTarget;
+    tabButtons.forEach((item) => item.classList.toggle("active", item === button));
+    tabPanels.forEach((panel) => panel.classList.toggle("active", panel.dataset.tabPanel === target));
+  });
+});
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
@@ -244,6 +259,7 @@ function persistAndRender() {
 }
 
 function render() {
+  renderMainTimers();
   renderActivities();
   renderManualOptions();
   renderLogs();
@@ -265,6 +281,45 @@ function renderActivities() {
   renderActivityGroup(badActivitiesEl, badActivities, "No bad activities yet.");
 }
 
+function renderMainTimers() {
+  mainGoodTimersEl.innerHTML = "";
+  mainBadTimersEl.innerHTML = "";
+
+  renderTimerGroup(
+    mainGoodTimersEl,
+    state.activities.filter((activity) => activity.type === "good"),
+    "No good timers yet. Add one in Manage."
+  );
+  renderTimerGroup(
+    mainBadTimersEl,
+    state.activities.filter((activity) => activity.type === "bad"),
+    "No bad timers yet. Add one in Manage."
+  );
+}
+
+function renderTimerGroup(container, activities, emptyMessage) {
+  if (!activities.length) {
+    container.innerHTML = `<p class="empty-state">${emptyMessage}</p>`;
+    return;
+  }
+
+  activities.forEach((activity) => {
+    const fragment = timerTemplate.content.cloneNode(true);
+    const typeEl = fragment.querySelector(".timer-type");
+    const nameEl = fragment.querySelector(".timer-name");
+    const toggleButton = fragment.querySelector(".timer-toggle");
+    const isActive = state.activeTimer?.activityId === activity.id;
+
+    typeEl.textContent = capitalize(activity.type);
+    nameEl.textContent = activity.name;
+    toggleButton.textContent = isActive ? "Off" : "On";
+    toggleButton.classList.add(activity.type, isActive ? "active" : "idle");
+    toggleButton.addEventListener("click", () => toggleTimer(activity.id));
+
+    container.append(fragment);
+  });
+}
+
 function renderActivityGroup(container, activities, emptyMessage) {
   if (!activities.length) {
     container.innerHTML = `<p class="empty-state">${emptyMessage}</p>`;
@@ -273,19 +328,17 @@ function renderActivityGroup(container, activities, emptyMessage) {
 
   activities.forEach((activity) => {
     const fragment = activityTemplate.content.cloneNode(true);
-    const card = fragment.querySelector(".activity-card");
     const nameInput = fragment.querySelector(".activity-name-input");
     const typeSelect = fragment.querySelector(".activity-type-select");
-    const startButton = fragment.querySelector(".start-button");
-    const stopButton = fragment.querySelector(".stop-button");
+    const toggleButton = fragment.querySelector(".toggle-button");
     const deleteButton = fragment.querySelector(".delete-button");
     const isActive = state.activeTimer?.activityId === activity.id;
 
     nameInput.value = activity.name;
     typeSelect.value = activity.type;
-    startButton.disabled = isActive;
-    stopButton.disabled = !isActive;
-    card.dataset.activityId = activity.id;
+    toggleButton.textContent = isActive ? "Off" : "On";
+    toggleButton.classList.add(activity.type);
+    toggleButton.classList.toggle("active", isActive);
 
     nameInput.addEventListener("change", () => {
       activity.name = nameInput.value.trim() || activity.name;
@@ -299,12 +352,8 @@ function renderActivityGroup(container, activities, emptyMessage) {
       persistAndRender();
     });
 
-    startButton.addEventListener("click", () => {
-      startTimer(activity.id);
-    });
-
-    stopButton.addEventListener("click", () => {
-      stopTimer();
+    toggleButton.addEventListener("click", () => {
+      toggleTimer(activity.id);
     });
 
     deleteButton.addEventListener("click", () => {
@@ -378,14 +427,18 @@ function renderSummary() {
 
   goodTotalEl.textContent = formatDuration(totals.good);
   badTotalEl.textContent = formatDuration(totals.bad);
-  deltaTotalEl.textContent = `${delta >= 0 ? "+" : "-"}${formatDuration(Math.abs(delta))}`;
+  deltaTotalEl.textContent = formatSignedDuration(delta);
+  mainDeltaTotalEl.textContent = formatSignedDuration(delta);
 
   if (delta > 0) {
     deltaHintEl.textContent = "You are ahead on good time.";
+    mainDeltaHintEl.textContent = "Good time is ahead.";
   } else if (delta < 0) {
     deltaHintEl.textContent = "Bad time is currently ahead.";
+    mainDeltaHintEl.textContent = "Bad time is ahead.";
   } else {
     deltaHintEl.textContent = "Good and bad are balanced.";
+    mainDeltaHintEl.textContent = "Good and bad are balanced.";
   }
 }
 
@@ -577,6 +630,15 @@ function calculatePeriodStats(start, end) {
   return stats;
 }
 
+function toggleTimer(activityId) {
+  if (state.activeTimer?.activityId === activityId) {
+    stopTimer();
+    return;
+  }
+
+  startTimer(activityId);
+}
+
 function startTimer(activityId) {
   if (state.activeTimer?.activityId === activityId) {
     return;
@@ -664,6 +726,7 @@ function startTicking() {
   }
 
   tickHandle = window.setInterval(() => {
+    renderMainTimers();
     renderSummary();
     renderDashboard();
     renderHistory();
